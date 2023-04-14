@@ -31,6 +31,7 @@ func Migrate() {
 		&models.User{},
 		&models.Comment{},
 		&models.Post{},
+		&models.Token{},
 	)
 
 	log.Println("Migration done")
