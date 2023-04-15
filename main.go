@@ -13,5 +13,6 @@ func main() {
 	server := echo.New()
 	apiGroup := server.Group("/api")
 	routers.UserRouter(apiGroup)
+	routers.PostRouter(apiGroup)
 	server.Logger.Fatal(server.Start(":8080"))
 }
