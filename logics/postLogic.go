@@ -34,6 +34,16 @@ func PostGetByUserID(userID uint) ([]models.Post, error) {
 	return objs, nil
 }
 
+func PostGetAll() ([]models.Post, error) {
+	db := core.DB()
+	var objs []models.Post
+	res := db.Find(&objs)
+	if res.Error != nil {
+		return nil, errors.New(res.Error.Error())
+	}
+	return objs, nil
+}
+
 func PostDeleteByID(userID uint, postID uint) error {
 	db := core.DB()
 	var objs []models.Post

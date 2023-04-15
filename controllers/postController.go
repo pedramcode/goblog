@@ -51,3 +51,11 @@ func PostDelete(ctx echo.Context) error {
 	}
 	return utils.StdResponse(&ctx, http.StatusOK, "Post deleted")
 }
+
+func PostPubList(ctx echo.Context) error {
+	posts, err := logic.PostGetAll()
+	if err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+	return utils.StdResponse(&ctx, http.StatusOK, posts)
+}
