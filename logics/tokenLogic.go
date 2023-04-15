@@ -32,3 +32,27 @@ func TokenGetByUserID(userID uint) (models.Token, error) {
 
 	return obj, nil
 }
+
+func TokenGetByKey(key string) (models.Token, error) {
+	db := core.DB()
+	obj := models.Token{}
+
+	res := db.Where("Key LIKE ?", key).First(&obj)
+	if res.Error != nil {
+		return models.Token{}, errors.New(res.Error.Error())
+	}
+
+	return obj, nil
+}
+
+func TokenDeleteByUserID(userID uint) error {
+	db := core.DB()
+	obj := models.Token{}
+	obj.UserID = userID
+
+	res := db.Delete(&obj)
+	if res.Error != nil {
+		return errors.New(res.Error.Error())
+	}
+	return nil
+}

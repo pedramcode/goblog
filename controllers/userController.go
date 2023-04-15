@@ -57,3 +57,12 @@ func UserLogin(ctx echo.Context) error {
 	res["token"] = token.Key
 	return utils.StdResponse(&ctx, http.StatusOK, res)
 }
+
+func UserLogout(ctx echo.Context) error {
+	user, _ := ctx.Get("user").(models.User)
+	err := logic.TokenDeleteByUserID(user.ID)
+	if err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+	return nil
+}
