@@ -9,5 +9,5 @@ import (
 func UserRouter(group *echo.Group) {
 	group.POST("/user/register", controllers.UserRegister)
 	group.POST("/user/login", controllers.UserLogin)
-	group.POST("/user/logout", controllers.UserLogin, middlewares.TokenAuthMiddleware())
+	group.POST("/user/logout", controllers.UserLogout, middlewares.TokenAuthMiddleware())
 }

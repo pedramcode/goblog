@@ -33,6 +33,22 @@ func TokenGetByUserID(userID uint) (models.Token, error) {
 	return obj, nil
 }
 
+func TokenGetByUserIDCreate(userID uint) (models.Token, error) {
+	db := core.DB()
+	obj := models.Token{}
+	obj.UserID = userID
+
+	res := db.First(&obj)
+	if res.RowsAffected == 0 {
+		return TokenCreate(userID)
+	}
+	if res.Error != nil {
+		return models.Token{}, errors.New(res.Error.Error())
+	}
+
+	return obj, nil
+}
+
 func TokenGetByKey(key string) (models.Token, error) {
 	db := core.DB()
 	obj := models.Token{}
@@ -48,9 +64,8 @@ func TokenGetByKey(key string) (models.Token, error) {
 func TokenDeleteByUserID(userID uint) error {
 	db := core.DB()
 	obj := models.Token{}
-	obj.UserID = userID
 
-	res := db.Delete(&obj)
+	res := db.Where("user_id = ?", userID).Delete(&obj)
 	if res.Error != nil {
 		return errors.New(res.Error.Error())
 	}

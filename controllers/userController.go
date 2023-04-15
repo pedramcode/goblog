@@ -48,7 +48,7 @@ func UserLogin(ctx echo.Context) error {
 		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
 	}
 
-	token, err := logic.TokenGetByUserID(user.ID)
+	token, err := logic.TokenGetByUserIDCreate(user.ID)
 	if err != nil {
 		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
 	}
