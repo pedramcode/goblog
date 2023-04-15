@@ -7,4 +7,5 @@ import (
 
 func UserRouter(group *echo.Group) {
 	group.POST("/user/register", controllers.UserRegister)
+	group.POST("/user/login", controllers.UserLogin)
 }

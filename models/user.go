@@ -11,4 +11,5 @@ type User struct {
 	Email     string `json:"email"`
 	Phone     string `json:"phone"`
 	Posts     []Post `json:"posts"`
+	Token     Token
 }

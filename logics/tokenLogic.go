@@ -19,3 +19,16 @@ func TokenCreate(userID uint) (models.Token, error) {
 	}
 	return token, nil
 }
+
+func TokenGetByUserID(userID uint) (models.Token, error) {
+	db := core.DB()
+	obj := models.Token{}
+	obj.UserID = userID
+
+	res := db.First(&obj)
+	if res.Error != nil {
+		return models.Token{}, errors.New(res.Error.Error())
+	}
+
+	return obj, nil
+}

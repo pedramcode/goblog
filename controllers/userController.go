@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	logic "github.com/pedramcode/goblog/logics"
 	"github.com/pedramcode/goblog/models"
+	"github.com/pedramcode/goblog/serializers"
 	"github.com/pedramcode/goblog/utils"
 	"net/http"
 )
@@ -26,6 +27,28 @@ func UserRegister(ctx echo.Context) error {
 	}
 
 	token, err := logic.TokenCreate(user.ID)
+	if err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+
+	res := make(map[string]interface{})
+	res["token"] = token.Key
+	return utils.StdResponse(&ctx, http.StatusOK, res)
+}
+
+func UserLogin(ctx echo.Context) error {
+	loginData := serializers.LoginSerializer{}
+
+	if err := ctx.Bind(&loginData); err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+
+	user, err := logic.UserAuthenticate(loginData.Username, loginData.Password)
+	if err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+
+	token, err := logic.TokenGetByUserID(user.ID)
 	if err != nil {
 		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
 	}
