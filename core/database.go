@@ -11,7 +11,7 @@ import (
 var database *gorm.DB
 var database_err error
 
-func Init_DB() {
+func InitDb() {
 	log.Println("Preparing database connection")
 	database, database_err = gorm.Open(sqlite.Open(SQLITE_PATH), &gorm.Config{})
 	if database_err != nil {
@@ -27,11 +27,15 @@ func Migrate() {
 	}
 
 	// Model Schemas
-	database.AutoMigrate(
+	err := database.AutoMigrate(
 		&models.User{},
 		&models.Comment{},
 		&models.Post{},
+		&models.Token{},
 	)
+	if err != nil {
+		panic(err.Error())
+	}
 
 	log.Println("Migration done")
 }

@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Comment struct {
 	gorm.Model
-	PostID  uint   `gorm:"notNull"`
-	Title   string `gorm:"notNull"`
-	Content string `gorm:"notNull"`
+	UserID  uint   `gorm:"notNull" json:"user_id"`
+	PostID  uint   `gorm:"notNull" json:"post_id"`
+	Content string `gorm:"notNull" json:"content"`
 }
