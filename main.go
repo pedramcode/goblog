@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	core.Init_DB()
+	core.InitDb()
 	core.Migrate()
 
 	server := echo.New()
