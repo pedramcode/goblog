@@ -66,3 +66,8 @@ func UserLogout(ctx echo.Context) error {
 	}
 	return utils.StdResponse(&ctx, http.StatusOK, "Logged out")
 }
+
+func UserProfile(ctx echo.Context) error {
+	user, _ := ctx.Get("user").(models.User)
+	return utils.StdResponse(&ctx, http.StatusOK, user)
+}
