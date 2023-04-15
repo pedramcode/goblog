@@ -11,4 +11,5 @@ func PostRouter(group *echo.Group) {
 	group.GET("/post/me", controllers.PostList, middlewares.TokenAuthMiddleware())
 	group.DELETE("/post/:id", controllers.PostDelete, middlewares.TokenAuthMiddleware())
 	group.GET("/post", controllers.PostPubList)
+	group.POST("/post/:id/comment", controllers.PostNewComment, middlewares.TokenAuthMiddleware())
 }

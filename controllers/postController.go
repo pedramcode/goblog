@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	logic "github.com/pedramcode/goblog/logics"
 	"github.com/pedramcode/goblog/models"
+	"github.com/pedramcode/goblog/serializers"
 	"github.com/pedramcode/goblog/utils"
 	"net/http"
 	"strconv"
@@ -58,4 +59,29 @@ func PostPubList(ctx echo.Context) error {
 		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
 	}
 	return utils.StdResponse(&ctx, http.StatusOK, posts)
+}
+
+func PostNewComment(ctx echo.Context) error {
+	user, _ := ctx.Get("user").(models.User)
+
+	id := ctx.Param("id")
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+
+	commentData := serializers.NewCommentSerializer{}
+	if err := ctx.Bind(&commentData); err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+
+	if commentData.Content == "" {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, "Content cannot be empty")
+	}
+
+	comment, err := logic.CommentCreate(uint(idInt), user.ID, commentData.Content)
+	if err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+	return utils.StdResponse(&ctx, http.StatusOK, comment)
 }
