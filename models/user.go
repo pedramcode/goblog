@@ -8,7 +8,7 @@ type User struct {
 	Password  string `gorm:"notNull" json:"password"`
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
-	Email     string `gorm:"notNull;unique" json:"email"`
+	Email     string `json:"email"`
 	Phone     string `json:"phone"`
 	Posts     []Post `json:"posts"`
 }
