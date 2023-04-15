@@ -25,11 +25,22 @@ func PostCreate(userID uint, title, content string, comments []models.Comment) (
 
 func PostGetByUserID(userID uint) ([]models.Post, error) {
 	db := core.DB()
-	objs := []models.Post{}
+	var objs []models.Post
 
 	res := db.Where("user_id = ?", userID).Find(&objs)
 	if res.Error != nil {
 		return nil, errors.New(res.Error.Error())
 	}
 	return objs, nil
+}
+
+func PostDeleteByID(userID uint, postID uint) error {
+	db := core.DB()
+	var objs []models.Post
+
+	res := db.Where("user_id = ? AND id = ?", userID, postID).Delete(&objs)
+	if res.Error != nil {
+		return errors.New(res.Error.Error())
+	}
+	return nil
 }

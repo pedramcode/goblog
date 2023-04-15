@@ -6,6 +6,7 @@ import (
 	"github.com/pedramcode/goblog/models"
 	"github.com/pedramcode/goblog/utils"
 	"net/http"
+	"strconv"
 )
 
 func PostCreate(ctx echo.Context) error {
@@ -35,4 +36,18 @@ func PostList(ctx echo.Context) error {
 		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
 	}
 	return utils.StdResponse(&ctx, http.StatusOK, posts)
+}
+
+func PostDelete(ctx echo.Context) error {
+	user, _ := ctx.Get("user").(models.User)
+	id := ctx.Param("id")
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+	err = logic.PostDeleteByID(user.ID, uint(idInt))
+	if err != nil {
+		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
+	}
+	return utils.StdResponse(&ctx, http.StatusOK, "Post deleted")
 }

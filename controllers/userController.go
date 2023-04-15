@@ -64,5 +64,5 @@ func UserLogout(ctx echo.Context) error {
 	if err != nil {
 		return utils.RaiseError(&ctx, http.StatusBadRequest, err.Error())
 	}
-	return nil
+	return utils.StdResponse(&ctx, http.StatusOK, "Logged out")
 }
