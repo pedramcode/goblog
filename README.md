@@ -19,7 +19,7 @@ It's the package that responsible for adding the routes to web server and applyi
 This package contains all the models in application that will map to a table in database using Gorm.
 
 ### Logics
-In all the application, only this package allowed to communicate directly to database. It's a business logic layer.
+In all the application, only this package allowed to communicate directly with database. It's a business logic layer.
 
 ### Controllers
 This package is responsible to receiving requests, process them and generate corresponding response.
