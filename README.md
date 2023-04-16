@@ -2,11 +2,11 @@
 
 A sample of Go language web server - Weblog
 
-## External Packages
+## External Modules
 * [Echo](https://github.com/labstack/echo): A fast go web server framework
 * [Gorm](https://gorm.io): An ORM framework
 
-## Internal Packages
+## Packages
 The blog is operable with various internal packages. This packages are separated pieces of logic to increase readability and maintainability.
 
 ### Core
