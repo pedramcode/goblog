@@ -8,6 +8,7 @@ import (
 )
 
 func TokenAuthMiddleware() echo.MiddlewareFunc {
+	// TODO Not optimized query
 	return middleware.KeyAuth(func(key string, ctx echo.Context) (bool, error) {
 		token, err := logic.TokenGetByKey(key)
 		if err != nil {

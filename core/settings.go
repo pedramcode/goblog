@@ -1,5 +1,5 @@
 package core
 
 const (
-	SQLITE_PATH = "db.sqlite"
+	SqlitePath = "db.sqlite"
 )
