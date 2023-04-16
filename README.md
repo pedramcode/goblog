@@ -35,3 +35,6 @@ For more readability and increase control of user inputs, all user inputs that a
 
 ### Utils
 Utils package contains general functionalities in application.
+
+### Test
+Containing unit tests
