@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	logic "github.com/pedramcode/goblog/logics"
 	"github.com/pedramcode/goblog/models"
+	"github.com/pedramcode/goblog/pipelines"
 	"github.com/pedramcode/goblog/serializers"
 	"github.com/pedramcode/goblog/utils"
 	"net/http"
@@ -77,6 +78,14 @@ func PostNewComment(ctx echo.Context) error {
 
 	if commentData.Content == "" {
 		return utils.RaiseError(&ctx, http.StatusBadRequest, "Content cannot be empty")
+	}
+
+	wordChannel := pipelines.WordChannelize(commentData.Content)
+	junkChannel := pipelines.JunkChannelize(wordChannel)
+	for jRes := range junkChannel {
+		if jRes {
+			return utils.RaiseError(&ctx, http.StatusBadRequest, "Comment contains banned words")
+		}
 	}
 
 	comment, err := logic.CommentCreate(uint(idInt), user.ID, commentData.Content)
