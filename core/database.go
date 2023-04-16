@@ -9,15 +9,19 @@ import (
 )
 
 var database *gorm.DB
-var database_err error
+var databaseErr error
 
 func InitDb() {
 	log.Println("Preparing database connection")
-	database, database_err = gorm.Open(sqlite.Open(SqlitePath), &gorm.Config{})
-	if database_err != nil {
-		panic(database_err)
+	database, databaseErr = gorm.Open(sqlite.Open(SqlitePath), &gorm.Config{})
+	if databaseErr != nil {
+		panic(databaseErr)
 	}
 	log.Println("Database is ready")
+}
+
+func SetDB(dbN *gorm.DB) {
+	database = dbN
 }
 
 func Migrate() {
