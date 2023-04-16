@@ -65,7 +65,7 @@ func TokenDeleteByUserID(userID uint) error {
 	db := core.DB()
 	obj := models.Token{}
 
-	res := db.Where("user_id = ?", userID).Delete(&obj)
+	res := db.Unscoped().Where("user_id = ?", userID).Delete(&obj)
 	if res.Error != nil {
 		return errors.New(res.Error.Error())
 	}
