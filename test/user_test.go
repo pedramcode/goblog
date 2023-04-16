@@ -36,6 +36,39 @@ func TestCreateUserBadEmail(t *testing.T) {
 	}
 }
 
+func TestCreateNoEmail(t *testing.T) {
+	_, err := logic.UserCreate("bill", "123", "Bill", "Doe", "", "+9811111111")
+	if err != nil {
+		t.Fatal("Email shouldn't be required")
+	}
+}
+
+func TestTokenGeneration(t *testing.T) {
+	_, err := logic.TokenCreate(1)
+	if err != nil {
+		t.Fatal("Token generation failed")
+	}
+}
+
+func TestTokenGetForUser(t *testing.T) {
+	token1, err := logic.TokenGetByUserIDCreate(2)
+	if err != nil {
+		t.Fatal("Token generation failed")
+	}
+	key1 := token1.Key
+
+	token2, err := logic.TokenGetByUserIDCreate(2)
+	if err != nil {
+		t.Fatal("Token generation failed")
+	}
+	key2 := token2.Key
+
+	if key1 != key2 {
+		t.Fatal("Tokens aren't same, without logout")
+	}
+
+}
+
 // This should be last test function
 func TestCleanUp(t *testing.T) {
 	err := os.Remove(core.TestSqlitePath)
