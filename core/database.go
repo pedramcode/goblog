@@ -13,7 +13,7 @@ var database_err error
 
 func InitDb() {
 	log.Println("Preparing database connection")
-	database, database_err = gorm.Open(sqlite.Open(SQLITE_PATH), &gorm.Config{})
+	database, database_err = gorm.Open(sqlite.Open(SqlitePath), &gorm.Config{})
 	if database_err != nil {
 		panic(database_err)
 	}
