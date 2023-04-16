@@ -31,3 +31,18 @@ func TestJunkDetection(t *testing.T) {
 		t.Fatal("Junk detection failed")
 	}
 }
+
+func TestJunkDetectionWithoutJunk(t *testing.T) {
+	data := "I'm a good boy :D"
+	wChannel := pipelines.WordChannelize(data)
+	jChannel := pipelines.JunkChannelize(wChannel)
+	count := 0
+	for res := range jChannel {
+		if res {
+			count++
+		}
+	}
+	if count != 0 {
+		t.Fatal("Junk detection failed (with no junk)")
+	}
+}
