@@ -2,6 +2,7 @@ package logic
 
 import (
 	"errors"
+	"net/mail"
 
 	"github.com/pedramcode/goblog/core"
 	"github.com/pedramcode/goblog/models"
@@ -10,6 +11,13 @@ import (
 
 func UserCreate(username, password, firstname, lastname, email, phone string) (models.User, error) {
 	db := core.DB()
+
+	if email != "" {
+		_, err := mail.ParseAddress(email)
+		if err != nil {
+			return models.User{}, err
+		}
+	}
 
 	obj := models.User{
 		Username:  username,
