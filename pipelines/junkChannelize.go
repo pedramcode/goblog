@@ -1,6 +1,6 @@
 package pipelines
 
-// Really bad words to detect :)
+// Terrible and most offensive words to detect :)
 var junkDataset []string = []string{"fudge", "freak", "fart"}
 
 func isJunk(word string) bool {
