@@ -3,14 +3,9 @@ package pipelines
 import "strings"
 
 func WordChannelize(data string) <-chan string {
-	wordsRep := strings.Replace(data, "!", " ", -1)
-	wordsRep = strings.Replace(data, "?", " ", -1)
-	wordsRep = strings.Replace(data, ".", " ", -1)
-	wordsRep = strings.Replace(data, "(", " ", -1)
-	wordsRep = strings.Replace(data, ")", " ", -1)
-	wordsRep = strings.Replace(data, ":", " ", -1)
-	wordsRep = strings.Replace(data, ";", " ", -1)
-	wordsRep = strings.Replace(data, "&", " ", -1)
+	replacer := strings.NewReplacer("!", " ", "?", " ", ".", " ", "(",
+		" ", ")", " ", ":", " ", ";", " ", "&", " ")
+	wordsRep := replacer.Replace(data)
 	words := strings.Split(wordsRep, " ")
 	channel := make(chan string)
 	go func() {
